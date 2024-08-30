@@ -32,11 +32,12 @@ class _SplashScreenState extends State<SplashScreen> {
           ],
         ),
         backgroundColor: AppColors.colorBlack,
-        nextScreen: const HomeScreen() ,
+        nextScreen:  HomeScreen() ,
         splashIconSize: 250,
-      duration: 2000,
-      splashTransition: SplashTransition.slideTransition,
-      pageTransitionType: PageTransitionType.fade,
+      duration: 2100,
+      curve: Curves.bounceOut,
+      splashTransition: SplashTransition.sizeTransition,
+      pageTransitionType: PageTransitionType.bottomToTop,
       animationDuration: Duration(seconds: 1),
 
     );
