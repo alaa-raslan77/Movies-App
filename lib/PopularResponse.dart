@@ -5,15 +5,16 @@
 
 class PopularResponse {
   PopularResponse({
-      num? page, 
-      List<Results>? results, 
-      num? totalPages, 
-      num? totalResults,}){
+    num? page,
+    List<Results>? results,
+    num? totalPages,
+    num? totalResults,
+  }) {
     _page = page;
     _results = results;
     _totalPages = totalPages;
     _totalResults = totalResults;
-}
+  }
 
   PopularResponse.fromJson(dynamic json) {
     _page = json['page'];
@@ -30,15 +31,18 @@ class PopularResponse {
   List<Results>? _results;
   num? _totalPages;
   num? _totalResults;
-PopularResponse copyWith({  num? page,
-  List<Results>? results,
-  num? totalPages,
-  num? totalResults,
-}) => PopularResponse(  page: page ?? _page,
-  results: results ?? _results,
-  totalPages: totalPages ?? _totalPages,
-  totalResults: totalResults ?? _totalResults,
-);
+  PopularResponse copyWith({
+    num? page,
+    List<Results>? results,
+    num? totalPages,
+    num? totalResults,
+  }) =>
+      PopularResponse(
+        page: page ?? _page,
+        results: results ?? _results,
+        totalPages: totalPages ?? _totalPages,
+        totalResults: totalResults ?? _totalResults,
+      );
   num? get page => _page;
   List<Results>? get results => _results;
   num? get totalPages => _totalPages;
@@ -54,7 +58,6 @@ PopularResponse copyWith({  num? page,
     map['total_results'] = _totalResults;
     return map;
   }
-
 }
 
 /// adult : false
@@ -74,20 +77,21 @@ PopularResponse copyWith({  num? page,
 
 class Results {
   Results({
-      bool? adult, 
-      String? backdropPath, 
-      List<num>? genreIds, 
-      num? id, 
-      String? originalLanguage, 
-      String? originalTitle, 
-      String? overview, 
-      num? popularity, 
-      String? posterPath, 
-      String? releaseDate, 
-      String? title, 
-      bool? video, 
-      num? voteAverage, 
-      num? voteCount,}){
+    bool? adult,
+    String? backdropPath,
+    List<num>? genreIds,
+    num? id,
+    String? originalLanguage,
+    String? originalTitle,
+    String? overview,
+    num? popularity,
+    String? posterPath,
+    String? releaseDate,
+    String? title,
+    bool? video,
+    num? voteAverage,
+    num? voteCount,
+  }) {
     _adult = adult;
     _backdropPath = backdropPath;
     _genreIds = genreIds;
@@ -102,7 +106,7 @@ class Results {
     _video = video;
     _voteAverage = voteAverage;
     _voteCount = voteCount;
-}
+  }
 
   Results.fromJson(dynamic json) {
     _adult = json['adult'];
@@ -134,35 +138,38 @@ class Results {
   bool? _video;
   num? _voteAverage;
   num? _voteCount;
-Results copyWith({  bool? adult,
-  String? backdropPath,
-  List<num>? genreIds,
-  num? id,
-  String? originalLanguage,
-  String? originalTitle,
-  String? overview,
-  num? popularity,
-  String? posterPath,
-  String? releaseDate,
-  String? title,
-  bool? video,
-  num? voteAverage,
-  num? voteCount,
-}) => Results(  adult: adult ?? _adult,
-  backdropPath: backdropPath ?? _backdropPath,
-  genreIds: genreIds ?? _genreIds,
-  id: id ?? _id,
-  originalLanguage: originalLanguage ?? _originalLanguage,
-  originalTitle: originalTitle ?? _originalTitle,
-  overview: overview ?? _overview,
-  popularity: popularity ?? _popularity,
-  posterPath: posterPath ?? _posterPath,
-  releaseDate: releaseDate ?? _releaseDate,
-  title: title ?? _title,
-  video: video ?? _video,
-  voteAverage: voteAverage ?? _voteAverage,
-  voteCount: voteCount ?? _voteCount,
-);
+  Results copyWith({
+    bool? adult,
+    String? backdropPath,
+    List<num>? genreIds,
+    num? id,
+    String? originalLanguage,
+    String? originalTitle,
+    String? overview,
+    num? popularity,
+    String? posterPath,
+    String? releaseDate,
+    String? title,
+    bool? video,
+    num? voteAverage,
+    num? voteCount,
+  }) =>
+      Results(
+        adult: adult ?? _adult,
+        backdropPath: backdropPath ?? _backdropPath,
+        genreIds: genreIds ?? _genreIds,
+        id: id ?? _id,
+        originalLanguage: originalLanguage ?? _originalLanguage,
+        originalTitle: originalTitle ?? _originalTitle,
+        overview: overview ?? _overview,
+        popularity: popularity ?? _popularity,
+        posterPath: posterPath ?? _posterPath,
+        releaseDate: releaseDate ?? _releaseDate,
+        title: title ?? _title,
+        video: video ?? _video,
+        voteAverage: voteAverage ?? _voteAverage,
+        voteCount: voteCount ?? _voteCount,
+      );
   bool? get adult => _adult;
   String? get backdropPath => _backdropPath;
   List<num>? get genreIds => _genreIds;
@@ -196,5 +203,4 @@ Results copyWith({  bool? adult,
     map['vote_count'] = _voteCount;
     return map;
   }
-
 }

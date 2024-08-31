@@ -1,10 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:movies_app/PopularResponse.dart';
 
 import 'movie_details_screen.dart';
 
 class SliderCard extends StatelessWidget {
-  List<String> item_card;
+
+  List<Results> item_card;
   double width;
   double height;
   double fraction;
@@ -26,6 +28,7 @@ class SliderCard extends StatelessWidget {
                     Navigator.pushNamed(
                       context,
                       MovieDetailsScreen.routeName,
+                      arguments: item
                     );
                   },
                   child: Column(
@@ -36,8 +39,8 @@ class SliderCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(4),
                           child: Stack
                             (children: [
-                            Image.asset(
-                              item,
+                            Image.network(
+                              "https://image.tmdb.org/t/p/w500${item.posterPath}",
                               fit: BoxFit.fill,
                               width: width,
                               height: height,

@@ -10,5 +10,6 @@ class AppColors{
   static  const bottomBar =Color(0xff1A1A1A);
   static  const appBar =Color(0xff1D1E1D);
   static  const cardColor =Color(0xff343534);
+  static  const smalltext =Color(0xffCBCBCB);
 
 }

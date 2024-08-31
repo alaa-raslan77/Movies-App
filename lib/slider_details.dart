@@ -1,11 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:movies_app/PopularResponse.dart';
+import 'package:movies_app/api_manger.dart';
 import 'package:movies_app/colors_and_theme/app_colors.dart';
 
 import 'movie_details_screen.dart';
 
 class SliderDetailsCard extends StatelessWidget {
-  List<String> item_card;
+
+  List<Results> item_card;
   double width;
   double height;
   double fraction;
@@ -22,7 +25,7 @@ class SliderDetailsCard extends StatelessWidget {
     return  CarouselSlider(
         items: item_card.map((item) {
           return Container(
-            margin: EdgeInsets.symmetric(horizontal: 5.0),
+            margin: EdgeInsets.symmetric(horizontal: 5),
             child: Card(
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
 
@@ -39,10 +42,11 @@ class SliderDetailsCard extends StatelessWidget {
                             Navigator.pushNamed(
                               context,
                               MovieDetailsScreen.routeName,
+                              arguments: item
                             );
                           },
-                          child: Image.asset(
-                            item,
+                          child: Image.network(
+                            "https://image.tmdb.org/t/p/w500${item.posterPath}",
                             fit: BoxFit.fill,
                             width: width,
                             height: height,
@@ -64,15 +68,16 @@ class SliderDetailsCard extends StatelessWidget {
                       ] ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 8,bottom: 10),
+                    padding: const EdgeInsets.only(top: 0,left: 8,bottom: 0,right: 0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Row(
                           children: [
                               Icon(Icons.star,color: AppColors.colorYellow,size: 15,),
                             Text(
-                              "7.7",
+                              "${item.voteAverage!.toStringAsFixed(1)}",
                               style: TextStyle(
                                 color: Colors.yellow,
                                 fontWeight: FontWeight.bold,
@@ -82,18 +87,44 @@ class SliderDetailsCard extends StatelessWidget {
                           ],
                         ),
                         Text(
-                          "Deadpool 2",
+                          "${item.title??''}",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 12,
                           ),
                         ),
-                        Text(
-                          "2018 R 1h 59m",
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 8,
-                          ),
+                        Row(
+                          children: [
+                            Text(
+                              item.releaseDate!.substring(0, item.releaseDate!.length.clamp(0, 4)),
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 12,
+                              ),
+                            ),FutureBuilder(future: ApiManger.getMovieDetails(item.id.toString()),
+                                builder:
+                            (context, snapshot) {
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                return CircularProgressIndicator();
+                              }
+                              if (snapshot.hasError) {
+                                return Text(
+                                  "something went wrong",
+                                  style: TextStyle(color: Colors.white),
+                                );
+                              }
+                              var details = snapshot.data!;
+                              return   Text(
+                                "  RT  ${details.runtime! ~/ 60}h ${((details.runtime! / 60 - details.runtime! ~/ 60) * 60).toStringAsFixed(0)}m",
+
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12,
+                                ),
+                              );
+
+                            },)
+                          ],
                         ),
                       ],
                     ),
