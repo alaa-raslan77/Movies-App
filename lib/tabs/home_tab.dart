@@ -1,11 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:movies_app/api_manger.dart';
 import '../colors_and_theme/app_colors.dart';
-import '../movie_details_screen.dart';
-import '../slider.dart';
-import '../slider_details.dart';
+import '../details_screens/movie_details_screen.dart';
+import '../slider/slider.dart';
+import '../slider/slider_details.dart';
 
 class HomeTab extends StatelessWidget {
   HomeTab({super.key});
@@ -14,9 +15,10 @@ class HomeTab extends StatelessWidget {
     return FutureBuilder(
       future: ApiManger.getPopular(),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
-        }
+        // if (snapshot.connectionState == ConnectionState.waiting) {
+        //   return CircularProgressIndicator(color: Colors.white,
+        //   );
+       // }
         if (snapshot.hasError) {
           return Text(
             "something went wrong",
@@ -42,7 +44,10 @@ class HomeTab extends StatelessWidget {
                               arguments: item
                           );
                         },
-                        child: Image.network(
+                        child: snapshot.connectionState == ConnectionState.waiting? Center(
+                          child: LoadingAnimationWidget.beat(color: Colors.white,
+                              size: 40),
+                        ):Image.network(
                             "https://image.tmdb.org/t/p/w500${item.backdropPath}",
                             fit: BoxFit.fitWidth,
                             width: double.infinity,
@@ -69,7 +74,12 @@ class HomeTab extends StatelessWidget {
                                   arguments: item
                               );
                             },
-                            child: Image.network(
+                            child: snapshot.connectionState == ConnectionState.waiting? Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 50),
+                  child: LoadingAnimationWidget.beat(color: Colors.white,
+                  size: 20),
+                )):Image.network(
                               "https://image.tmdb.org/t/p/w500${item.posterPath}",
                               width: 129,
                               height: 199,
@@ -81,13 +91,7 @@ class HomeTab extends StatelessWidget {
                               height: 36,
                               fit: BoxFit.cover,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 3, left: 2),
-                              child: Icon(
-                                Icons.add,
-                                size: 22,
-                              ),
-                            )
+
                        ] ),
                       ),
                       Padding(

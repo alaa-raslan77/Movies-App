@@ -1,9 +1,4 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:movies_app/colors_and_theme/app_colors.dart';
-import 'package:movies_app/movie_details_screen.dart';
-import 'package:movies_app/slider.dart';
-import 'package:movies_app/slider_details.dart';
 import 'package:movies_app/tabs/browse_tab.dart';
 import 'package:movies_app/tabs/home_tab.dart';
 import 'package:movies_app/tabs/search_tab.dart';

@@ -1,4 +1,4 @@
-import 'PopularResponse.dart';
+import 'MovieResponse.dart';
 
 
 

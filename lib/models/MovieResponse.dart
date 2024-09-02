@@ -3,8 +3,8 @@
 /// total_pages : 45753
 /// total_results : 915041
 
-class PopularResponse {
-  PopularResponse({
+class MovieResponse {
+  MovieResponse({
     num? page,
     List<Results>? results,
     num? totalPages,
@@ -16,7 +16,7 @@ class PopularResponse {
     _totalResults = totalResults;
   }
 
-  PopularResponse.fromJson(dynamic json) {
+  MovieResponse.fromJson(dynamic json) {
     _page = json['page'];
     if (json['results'] != null) {
       _results = [];
@@ -31,13 +31,13 @@ class PopularResponse {
   List<Results>? _results;
   num? _totalPages;
   num? _totalResults;
-  PopularResponse copyWith({
+  MovieResponse copyWith({
     num? page,
     List<Results>? results,
     num? totalPages,
     num? totalResults,
   }) =>
-      PopularResponse(
+      MovieResponse(
         page: page ?? _page,
         results: results ?? _results,
         totalPages: totalPages ?? _totalPages,

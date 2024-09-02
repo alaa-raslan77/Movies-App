@@ -1,10 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:movies_app/PopularResponse.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:movies_app/models/MovieResponse.dart';
 import 'package:movies_app/api_manger.dart';
 import 'package:movies_app/colors_and_theme/app_colors.dart';
 
-import 'movie_details_screen.dart';
+import '../details_screens/movie_details_screen.dart';
 
 class SliderDetailsCard extends StatelessWidget {
 
@@ -12,7 +13,6 @@ class SliderDetailsCard extends StatelessWidget {
   double width;
   double height;
   double fraction;
-  // Function onClick;
   SliderDetailsCard(
       {super.key,
         required this.item_card,
@@ -46,7 +46,7 @@ class SliderDetailsCard extends StatelessWidget {
                             );
                           },
                           child: Image.network(
-                            "https://image.tmdb.org/t/p/w500${item.posterPath}",
+                            "https://image.tmdb.org/t/p/w500${item.posterPath??''}",
                             fit: BoxFit.fill,
                             width: width,
                             height: height,
@@ -58,13 +58,7 @@ class SliderDetailsCard extends StatelessWidget {
                           height: 40,
                           fit: BoxFit.cover,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 3, left: 2),
-                          child: Icon(
-                            Icons.add,
-                            size: 22,
-                          ),
-                        )
+
                       ] ),
                   ),
                   Padding(
@@ -105,7 +99,8 @@ class SliderDetailsCard extends StatelessWidget {
                                 builder:
                             (context, snapshot) {
                               if (snapshot.connectionState == ConnectionState.waiting) {
-                                return CircularProgressIndicator();
+                                return LoadingAnimationWidget.waveDots(color: Colors.white,
+                                    size: 20);
                               }
                               if (snapshot.hasError) {
                                 return Text(
@@ -122,8 +117,8 @@ class SliderDetailsCard extends StatelessWidget {
                                   fontSize: 12,
                                 ),
                               );
-
-                            },)
+                             },
+                            )
                           ],
                         ),
                       ],

@@ -1,8 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:movies_app/PopularResponse.dart';
+import 'package:movies_app/models/MovieResponse.dart';
 
-import 'movie_details_screen.dart';
+import '../details_screens/movie_details_screen.dart';
 
 class SliderCard extends StatelessWidget {
 
@@ -51,13 +51,7 @@ class SliderCard extends StatelessWidget {
                               height: 40,
                               fit: BoxFit.cover,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 3, left: 2),
-                              child: Icon(
-                                Icons.add,
-                                size: 22,
-                              ),
-                            )
+
                           ]),
                         ),
                       ),
