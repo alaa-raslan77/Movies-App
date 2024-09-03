@@ -15,7 +15,8 @@ class WatchListTab extends StatelessWidget {
               color: Colors.white,
               fontWeight: FontWeight.w400
 
-          ),)
+          ),),
+
       ],),
     );
   }

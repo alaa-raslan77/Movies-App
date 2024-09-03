@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movies_app/models/category_model.dart';
-
 import '../details_screens/category_details_screen.dart';
 
 
@@ -31,7 +30,7 @@ class BrowseTab extends StatelessWidget {
               mainAxisSpacing: 0
             ),
             itemBuilder: (context, index) {
-              return InkWell(
+              return GestureDetector(
                 onTap: () {
                   Navigator.pushNamed(context, CategoryDetailsScreen.routeName,
                   arguments: category[index]);

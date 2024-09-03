@@ -3,26 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:movies_app/models/MovieResponse.dart';
 
 import '../details_screens/movie_details_screen.dart';
+import '../models/slider_model.dart';
 
 class SliderCard extends StatelessWidget {
 
-  List<Results> item_card;
-  double width;
-  double height;
-  double fraction;
-  // Function onClick;
+  SliderModel sliderModel;
   SliderCard(
       {super.key,
-      required this.item_card,
-      required this.width,
-      required this.height,
-      required this.fraction});
+      required this.sliderModel});
 
   @override
   Widget build(BuildContext context) {
     return CarouselSlider(
-        items: item_card
-            .map((item) => Container(
+        items:
+        sliderModel.item_card.map((item) => Container(
                     child: GestureDetector(
                   onTap: () {
                     Navigator.pushNamed(
@@ -38,12 +32,15 @@ class SliderCard extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(4),
                           child: Stack
-                            (children: [
-                            Image.network(
+                            (children: [item.posterPath == null
+                          ? Image.asset("assets/images/no_image.png", fit: BoxFit.fill,
+                            width: sliderModel.width,
+                            height: sliderModel.height,):
+                            Image.network(item.posterPath==null?"assets/images/no_image.png":
                               "https://image.tmdb.org/t/p/w500${item.posterPath}",
                               fit: BoxFit.fill,
-                              width: width,
-                              height: height,
+                              width: sliderModel.width,
+                              height: sliderModel.height,
                             ),
                             Image.asset(
                               "assets/images/before_adding.png",
@@ -62,10 +59,10 @@ class SliderCard extends StatelessWidget {
         options: CarouselOptions(
 
           autoPlay: false,
-          height: height,
+          height: sliderModel.height,
           disableCenter: false,
           padEnds: false,
-          viewportFraction: fraction,
+          viewportFraction: sliderModel.fraction,
         ));
   }
 }

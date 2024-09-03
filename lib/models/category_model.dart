@@ -44,7 +44,7 @@ class CategoryModel {
           id: "9648"),
       CategoryModel(
           label: "Romance",
-          imagePath: "assets/images/Romance.jpg",
+          imagePath: "assets/images/Romance1.jpeg",
           id: "10749"),
       CategoryModel(
           label: "Science Fiction",

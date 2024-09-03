@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'api_manger.dart';
 import 'colors_and_theme/app_colors.dart';
 import 'details_screens/movie_details_screen.dart';
@@ -95,7 +96,9 @@ class MovieSearchDelegate extends SearchDelegate{
         future: ApiManger.searchMovies(query),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return Center(child: LoadingAnimationWidget.staggeredDotsWave(
+              color: AppColors.colorYellow, size: 50,
+            ));
           }
           if (snapshot.hasError) {
             return Text(
@@ -126,7 +129,8 @@ class MovieSearchDelegate extends SearchDelegate{
                           child: Container(
                             width: 150,
                             height: 100,
-                            child: Image.network(
+                            child: search[index].backdropPath == null
+                                ? Image.asset("assets/images/no_image.png",fit: BoxFit.fill,):Image.network(
                               "https://image.tmdb.org/t/p/w500${search[index].backdropPath}",
                               fit: BoxFit.fill,
                             ),

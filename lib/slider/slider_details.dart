@@ -6,24 +6,20 @@ import 'package:movies_app/api_manger.dart';
 import 'package:movies_app/colors_and_theme/app_colors.dart';
 
 import '../details_screens/movie_details_screen.dart';
+import '../models/slider_model.dart';
 
 class SliderDetailsCard extends StatelessWidget {
 
-  List<Results> item_card;
-  double width;
-  double height;
-  double fraction;
+  SliderModel sliderModel;
   SliderDetailsCard(
       {super.key,
-        required this.item_card,
-        required this.width,
-        required this.height,
-        required this.fraction});
+        required this.sliderModel
+      });
 
   @override
   Widget build(BuildContext context) {
     return  CarouselSlider(
-        items: item_card.map((item) {
+        items: sliderModel.item_card.map((item) {
           return Container(
             margin: EdgeInsets.symmetric(horizontal: 5),
             child: Card(
@@ -45,11 +41,14 @@ class SliderDetailsCard extends StatelessWidget {
                               arguments: item
                             );
                           },
-                          child: Image.network(
+                          child:item.posterPath == null
+                              ? Image.asset("assets/images/no_image.png",  fit: BoxFit.cover,
+                            width: sliderModel.width,
+                            height: sliderModel.height,): Image.network(
                             "https://image.tmdb.org/t/p/w500${item.posterPath??''}",
                             fit: BoxFit.fill,
-                            width: width,
-                            height: height,
+                            width: sliderModel.width,
+                            height: sliderModel.height,
                           ),
                         ),
                         Image.asset(
@@ -134,7 +133,7 @@ class SliderDetailsCard extends StatelessWidget {
           height: 215,
           disableCenter: false,
           padEnds: false,
-          viewportFraction: fraction,
+          viewportFraction: sliderModel.fraction,
 
 
         ));
