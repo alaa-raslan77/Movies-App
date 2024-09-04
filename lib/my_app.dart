@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/colors_and_theme/my_theme_data.dart';
+import 'package:movies_app/regesters/log_in.dart';
 import 'details_screens/category_details_screen.dart';
 import 'details_screens/movie_details_screen.dart';
 import 'splash_screen.dart';
@@ -17,6 +18,7 @@ class myApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: SplashScreen.routeName,
       routes: {
+        LogIn.routeName:(context)=>LogIn(),
         HomeScreen.routeName: (context) => HomeScreen(),
         SplashScreen.routeName: (context) => SplashScreen(),
         MovieDetailsScreen.routeName: (context) => MovieDetailsScreen(),

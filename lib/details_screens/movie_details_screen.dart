@@ -6,7 +6,9 @@ import 'package:movies_app/api_manger.dart';
 import 'package:movies_app/colors_and_theme/app_colors.dart';
 import 'package:movies_app/models/slider_model.dart';
 import 'package:movies_app/slider/slider_details.dart';
+import '../firebase_functions.dart';
 import '../models/MovieResponse.dart';
+import '../models/movie_model.dart';
 
 class MovieDetailsScreen extends StatelessWidget {
   static const String routeName = "movieDetailsScreen";
@@ -119,11 +121,24 @@ class MovieDetailsScreen extends StatelessWidget {
                           Padding(
                             padding:  details.posterPath == null
                                 ?const EdgeInsets.only(left: 0, top: 20):const EdgeInsets.only(left: 29, top: 20),
-                            child: Image.asset(
-                              "assets/images/before_adding.png",
-                              width: 27,
-                              height: 36,
-                              fit: BoxFit.cover,
+                            child: GestureDetector(
+                              onTap: (){
+                                MovieModel movie =MovieModel(
+                                    movieId: model.id.toString(),
+                                    path: model.backdropPath??"assets/images/no_image.png",
+                                    releaseDate: model.releaseDate.toString(),
+                                    title: model.title!,
+                                    vote: model.voteAverage.toString(),
+                                    isInDatabase: true
+                                );
+                                FirebaseFunctions.addMovie(movie);
+                              },
+                              child: Image.asset(
+                                "assets/images/before_adding.png",
+                                width: 27,
+                                height: 36,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         ]),

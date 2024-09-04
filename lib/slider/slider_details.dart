@@ -6,6 +6,8 @@ import 'package:movies_app/api_manger.dart';
 import 'package:movies_app/colors_and_theme/app_colors.dart';
 
 import '../details_screens/movie_details_screen.dart';
+import '../firebase_functions.dart';
+import '../models/movie_model.dart';
 import '../models/slider_model.dart';
 
 class SliderDetailsCard extends StatelessWidget {
@@ -51,11 +53,24 @@ class SliderDetailsCard extends StatelessWidget {
                             height: sliderModel.height,
                           ),
                         ),
-                        Image.asset(
-                          "assets/images/before_adding.png",
-                          width: 27,
-                          height: 40,
-                          fit: BoxFit.cover,
+                        GestureDetector(
+                          onTap: (){
+                            MovieModel movie =MovieModel(
+                                movieId: item.id.toString(),
+                                path: item.backdropPath??"assets/images/no_image.png",
+                                releaseDate: item.releaseDate.toString(),
+                                title: item.title!,
+                                vote: item.voteAverage.toString(),
+                                isInDatabase: true
+                            );
+                            FirebaseFunctions.addMovie(movie);
+                          },
+                          child: Image.asset(
+                            "assets/images/before_adding.png",
+                            width: 27,
+                            height: 40,
+                            fit: BoxFit.cover,
+                          ),
                         ),
 
                       ] ),

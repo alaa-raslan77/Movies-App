@@ -3,6 +3,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app/colors_and_theme/app_colors.dart';
 import 'package:movies_app/home_screen.dart';
+import 'package:movies_app/regesters/log_in.dart';
 import 'package:page_transition/page_transition.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -32,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
           ],
         ),
         backgroundColor: AppColors.colorBlack,
-        nextScreen:  HomeScreen() ,
+        nextScreen:  LogIn() ,
         splashIconSize: 250,
       duration: 2100,
       curve: Curves.bounceOut,
