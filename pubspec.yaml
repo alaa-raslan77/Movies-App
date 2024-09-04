@@ -41,7 +41,6 @@ dependencies:
   http: ^1.2.2
   google_fonts: ^6.2.1
   searchable_listview: ^2.15.2
-
   loading_animation_widget: ^1.2.1
   card_loading: ^0.3.2
   shimmer: ^3.0.0
@@ -50,6 +49,8 @@ dependencies:
   firebase_auth: ^4.16.0
   google_sign_in: ^6.2.1
   provider: ^6.1.2
+  bloc: ^8.1.4
+  flutter_bloc: ^8.1.6
 
 
 dev_dependencies:

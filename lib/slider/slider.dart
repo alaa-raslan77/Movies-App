@@ -2,13 +2,11 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app/firebase_functions.dart';
-import 'package:movies_app/models/MovieResponse.dart';
 import 'package:movies_app/models/movie_model.dart';
-
 import '../details_screens/movie_details_screen.dart';
 import '../models/slider_model.dart';
 
-class SliderCard extends StatelessWidget {
+class SliderCard extends StatefulWidget {
   MovieModel movieModel;
 
   SliderModel sliderModel;
@@ -19,10 +17,17 @@ class SliderCard extends StatelessWidget {
       });
 
   @override
+  State<SliderCard> createState() => _SliderCardState();
+}
+
+class _SliderCardState extends State<SliderCard> {
+  bool isSelected=false;
+
+  @override
   Widget build(BuildContext context) {
     return CarouselSlider(
         items:
-        sliderModel.item_card.map((item) => Container(
+        widget.sliderModel.item_card.map((item) => Container(
                     child: GestureDetector(
                   onTap: () {
                     Navigator.pushNamed(
@@ -40,20 +45,28 @@ class SliderCard extends StatelessWidget {
                           child: Stack
                             (children: [item.posterPath == null
                           ? Image.asset("assets/images/no_image.png", fit: BoxFit.fill,
-                            width: sliderModel.width,
-                            height: sliderModel.height,):
+                            width: widget.sliderModel.width,
+                            height: widget.sliderModel.height,):
                             Image.network(item.posterPath==null?"assets/images/no_image.png":
                               "https://image.tmdb.org/t/p/w500${item.posterPath}",
                               fit: BoxFit.fill,
-                              width: sliderModel.width,
-                              height: sliderModel.height,
+                              width: widget.sliderModel.width,
+                              height: widget.sliderModel.height,
                             ),
-                            movieModel.isInDatabase?
-                            Image.asset(
-                              "assets/images/after_adding.png",
-                              width: 27,
-                              height: 40,
-                              fit: BoxFit.cover,
+                            isSelected==true?
+                            GestureDetector(
+                              onTap: (){
+                                //FirebaseFunctions.deleteMovie(item.id.toString());
+                                setState(() {
+                                  isSelected=false;
+                                });
+                              },
+                              child: Image.asset(
+                                "assets/images/after_adding.png",
+                                width: 27,
+                                height: 40,
+                                fit: BoxFit.cover,
+                              ),
                             ):
                             GestureDetector(
                               onTap: (){
@@ -67,6 +80,9 @@ class SliderCard extends StatelessWidget {
                                   isInDatabase: true
                                 );
                                 FirebaseFunctions.addMovie(movie);
+                                setState(() {
+                                  isSelected=true;
+                                });
                               },
                               child:
 
@@ -88,10 +104,10 @@ class SliderCard extends StatelessWidget {
         options: CarouselOptions(
 
           autoPlay: false,
-          height: sliderModel.height,
+          height: widget.sliderModel.height,
           disableCenter: false,
           padEnds: false,
-          viewportFraction: sliderModel.fraction,
+          viewportFraction: widget.sliderModel.fraction,
         ));
   }
 }
