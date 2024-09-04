@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movies_app/tabs/browse_tab.dart';
 import 'package:movies_app/tabs/home_tab.dart';
 import 'package:movies_app/tabs/search_tab.dart';
+import 'package:movies_app/tabs/settings_tab.dart';
 import 'package:movies_app/tabs/watch_list_tab.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -41,6 +42,9 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
               icon: ImageIcon(AssetImage("assets/images/watch_list.png")),
               label: "WatchList"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings_outlined,size: 30,),
+              label: "Settings"),
         ],
       ),
     );
@@ -51,5 +55,6 @@ class _HomeScreenState extends State<HomeScreen> {
     SearchTab(),
     BrowseTab(),
     WatchListTab(),
+    SettingsTab()
   ];
 }

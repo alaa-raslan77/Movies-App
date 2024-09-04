@@ -3,8 +3,10 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app/colors_and_theme/app_colors.dart';
 import 'package:movies_app/home_screen.dart';
+import 'package:movies_app/provider/my_provider.dart';
 import 'package:movies_app/regesters/log_in.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   static const String routeName ="splashScreen";
@@ -25,6 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var pro =Provider.of<MyProvider>(context);
     return AnimatedSplashScreen(
         splash: Column(
 
@@ -33,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
           ],
         ),
         backgroundColor: AppColors.colorBlack,
-        nextScreen:  LogIn() ,
+        nextScreen: pro.firebaseUser!=null?HomeScreen(): LogIn() ,
         splashIconSize: 250,
       duration: 2100,
       curve: Curves.bounceOut,

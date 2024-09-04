@@ -6,6 +6,7 @@ class MovieModel {
   String vote;
   String path;
   bool isInDatabase;
+  String uid;
 
   MovieModel({required this.title,
     required this.releaseDate,
@@ -13,6 +14,7 @@ class MovieModel {
     required this.vote,
     required this.movieId,
     this.id="",
+    required this.uid,
 
   this.isInDatabase=false});
 
@@ -24,7 +26,8 @@ class MovieModel {
       vote: json['vote'],
       movieId: json['movieId'],
       isInDatabase: json['isInDatabase'],
-    id: json['id']
+    id: json['id'],
+    uid: json['uid'],
 
   );
 
@@ -36,7 +39,10 @@ class MovieModel {
       "vote": vote,
       "movieId": movieId,
       "isInDatabase": isInDatabase,
-      "id": id
+      "id": id,
+      "uid": uid,
+
+
     };
 
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movies_app/colors_and_theme/app_colors.dart';
 import 'package:movies_app/firebase_functions.dart';
+import 'package:movies_app/home_screen.dart';
 
 class LogIn extends StatefulWidget {
   static const String routeName ="logIn";
@@ -44,7 +45,10 @@ class _LogInState extends State<LogIn> {
                   ),),
                   SizedBox(height: 18,),
                   ElevatedButton(onPressed: (){
-                    FirebaseFunctions.signInWithGoogle();
+                    FirebaseFunctions.signInWithGoogle().then((onValue){
+                      Navigator.pushNamedAndRemoveUntil(context, HomeScreen.routeName, (route) => false);
+                    });
+                    
                   },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,

@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -124,6 +125,7 @@ class MovieDetailsScreen extends StatelessWidget {
                             child: GestureDetector(
                               onTap: (){
                                 MovieModel movie =MovieModel(
+                                    uid: FirebaseAuth.instance.currentUser!.uid,
                                     movieId: model.id.toString(),
                                     path: model.backdropPath??"assets/images/no_image.png",
                                     releaseDate: model.releaseDate.toString(),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/colors_and_theme/my_theme_data.dart';
+import 'package:movies_app/provider/my_provider.dart';
 import 'package:movies_app/regesters/log_in.dart';
+import 'package:provider/provider.dart';
 import 'details_screens/category_details_screen.dart';
 import 'details_screens/movie_details_screen.dart';
 import 'splash_screen.dart';
@@ -12,6 +14,7 @@ class myApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       darkTheme: MyThemeData.DarkTheme,
       themeMode: ThemeMode.dark,

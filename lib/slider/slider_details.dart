@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:movies_app/models/MovieResponse.dart';
@@ -56,11 +57,12 @@ class SliderDetailsCard extends StatelessWidget {
                         GestureDetector(
                           onTap: (){
                             MovieModel movie =MovieModel(
+                                uid: FirebaseAuth.instance.currentUser!.uid,
                                 movieId: item.id.toString(),
                                 path: item.backdropPath??"assets/images/no_image.png",
                                 releaseDate: item.releaseDate.toString(),
                                 title: item.title!,
-                                vote: item.voteAverage.toString(),
+                                vote: item.voteAverage!.toStringAsFixed(1).toString(),
                                 isInDatabase: true
                             );
                             FirebaseFunctions.addMovie(movie);
