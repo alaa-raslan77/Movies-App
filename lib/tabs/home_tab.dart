@@ -232,7 +232,7 @@ class HomeTab extends StatelessWidget {
                       ).toList() ??
                       [],
                   options: CarouselOptions(
-                    autoPlay: false,
+                    autoPlay: true,
                     height: 355,
                     disableCenter: false,
                     padEnds: true,

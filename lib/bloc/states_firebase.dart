@@ -16,7 +16,10 @@ class ReadUserDataLoadingState extends FirebaseState {}
 
 class ReadUserDataErrorState extends FirebaseState {}
 
-class SignInSuccessState extends FirebaseState {}
+class SignInSuccessState extends FirebaseState {
+  final UserModel user;
+  SignInSuccessState(this.user);
+}
 
 class SignInLoadingState extends FirebaseState {}
 

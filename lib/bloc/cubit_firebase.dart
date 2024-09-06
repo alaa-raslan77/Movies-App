@@ -58,7 +58,7 @@ class FirebaseCubit extends Cubit<FirebaseState> {
       UserModel userModel = UserModel(id: userCredential.user!.uid);
       await FirebaseFunctions.addUser(userModel);
 
-      emit(SignInSuccessState());
+      emit(SignInSuccessState(userModel!));
     } catch (e) {
       emit(SignInErrorState());
     }
