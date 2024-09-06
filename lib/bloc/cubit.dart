@@ -1,90 +1,86 @@
-import 'dart:convert';
-
 import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/bloc/states.dart';
-import 'package:http/http.dart' as http;
-
+import 'package:movies_app/models/movie_details.dart';
+import 'package:movies_app/repo/repo.dart';
 import '../models/MovieResponse.dart';
-import '../models/NewRealeases.dart';
+import '../models/NewReleases.dart';
 
-class HomeCubit extends Cubit<HomeState>{
+class HomeCubit extends Cubit<HomeState> {
+  HomeRepo repo;
 
-  HomeCubit():super(HomeInitState());
+  HomeCubit(this.repo) : super(HomeInitState());
 
   MovieResponse? popularResponse;
-  NewRealeases?  newReleases;
+  NewRealeases? newReleases;
   MovieResponse? recommended;
+  MovieDetails? movieDetails;
+  MovieResponse? moreLikeThis;
+  MovieResponse? searchResponse;
+  MovieResponse? categoryResponse;
 
+  static HomeCubit get(context) => BlocProvider.of(context);
 
-   Future<void> getPopular()async{
-    try{
+  Future<void> getPopular() async {
+    try {
       emit(HomeGetPopularLoadingState());
-      // https://api.themoviedb.org/3/movie/popular
-      Uri url =Uri.https("api.themoviedb.org","/3/movie/popular",);
-      http.Response response =await http.get(url,headers:{
-        "Authorization":"Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzMDJmNjNmMDEyZmE2MTBjOTQyMTI1YWU3YWZlMTE0ZSIsIm5iZiI6MTcyNDkyMzM1Ni4yNjQxMTUsInN1YiI6IjY2ZDAzMTlmMTVmNTJjYjU0NGQ0MGFlOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.oM8W5q5UJYF3KdihH0aU_1x5Mz5cprcouMHppY6_gjU"
-      });
-      var json =jsonDecode(response.body);
-
-      popularResponse =MovieResponse.fromJson(json);
+      popularResponse = await repo.getPopular();
       emit(HomeGetPopularSuccessState());
-    }catch(e){
+      getNewReleases();
+      getRecommended();
+    } catch (e) {
       emit(HomeGetPopularErrorState());
     }
-
   }
 
-
-   Future<void>getNewReleases()async{
-    try{
+  Future<void> getNewReleases() async {
+    try {
       emit(HomeGetNewReleasesLoadingState());
-      // https://api.themoviedb.org/3/movie/upcoming
-
-      Uri url =Uri.https("api.themoviedb.org","/3/movie/upcoming");
-      http.Response response =await http.get(url,headers:{
-        "Authorization":"Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzMDJmNjNmMDEyZmE2MTBjOTQyMTI1YWU3YWZlMTE0ZSIsIm5iZiI6MTcyNTAwNjQ0OC4wNjI1MzYsInN1YiI6IjY2ZDAzMTlmMTVmNTJjYjU0NGQ0MGFlOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1FeXR6VcCCEWSwbhhB60laQVRjOW8dqQ_0FNfP8pBj0"
-      });
-
-      var json = jsonDecode(response.body);
-      newReleases =NewRealeases.fromJson(json);
+      newReleases = await repo.getNewReleases();
       emit(HomeGetNewReleasesErrorState());
-
-
-
-    }catch(e){
+    } catch (e) {
       emit(HomeGetNewReleasesErrorState());
     }
-
   }
 
-
-   Future<void>getRecommended()async{
-    try{
+  Future<void> getRecommended() async {
+    try {
       emit(HomeGetRecommendedLoadingState());
-
-      // https://api.themoviedb.org/3/movie/top_rated
-
-      Uri url =Uri.https("api.themoviedb.org","/3/movie/top_rated");
-      http.Response response =await http.get(url,headers:{
-        "Authorization":"Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzMDJmNjNmMDEyZmE2MTBjOTQyMTI1YWU3YWZlMTE0ZSIsIm5iZiI6MTcyNTAwNjQ0OC4wNjI1MzYsInN1YiI6IjY2ZDAzMTlmMTVmNTJjYjU0NGQ0MGFlOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1FeXR6VcCCEWSwbhhB60laQVRjOW8dqQ_0FNfP8pBj0"
-      });
-
-      var json = jsonDecode(response.body);
-      recommended =MovieResponse.fromJson(json);
+      recommended = await repo.getRecommended();
       emit(HomeGetRecommendedSuccessState());
-
-
-    }catch(e){
+    } catch (e) {
       emit(HomeGetRecommendedErrorState());
     }
-
-
   }
 
+  Future<void> getMovieDetails(String movie_id) async {
+    try {
+      emit(HomeGetMovieDetailsLoadingState());
+      movieDetails = await repo.getMovieDetails(movie_id);
+      emit(HomeGetMovieDetailsSuccessState());
+      getMoreLikeThis(movie_id);
+    } catch (e) {
+      emit(HomeGetMovieDetailsErrorState());
+    }
+  }
 
+  Future<void> getMoreLikeThis(String movie_id) async {
+    try {
+      emit(HomeGetMoreLikeThisLoadingState());
+      moreLikeThis = await repo.getMoreLikeThis(movie_id);
+      emit(HomeGetMoreLikeThisSuccessState());
+    } catch (e) {
+      emit(HomeGetMoreLikeThisErrorState());
+    }
+  }
 
-
-
-
-
+  Future<void> categoryMovies(String id) async {
+    try {
+      emit(HomeGetCategoryLoadingState());
+      categoryResponse = await repo.categoryMovies(id);
+      emit(HomeGetCategorySuccessState());
+    } catch (e) {
+      emit(HomeGetCategoryErrorState());
+    }
+  }
 }

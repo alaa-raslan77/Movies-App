@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:movies_app/bloc/cubit_firebase.dart';
+import 'package:movies_app/bloc/cubit_watch_list.dart';
+import 'package:movies_app/bloc/state_watch_list.dart';
 import 'package:movies_app/firebase_functions.dart';
+import 'package:movies_app/main.dart';
+import 'package:movies_app/repo/home_local_ds_impl.dart';
+import 'package:movies_app/repo/home_remote_ds_impl.dart';
 import '../colors_and_theme/app_colors.dart';
 
 class WatchListTab extends StatelessWidget {
@@ -9,61 +16,70 @@ class WatchListTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return
+    return BlocProvider(
+      create: (context) =>
+          WatchListCubit(isConnected ? HomeRemoteDSImpl() : HomeLocalDSImpl())
+            ..getMovies(),
+      child: BlocConsumer<WatchListCubit, WatchListState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          if (state is GetMoviesLoadingState) {
+            return Center(
+                child: LoadingAnimationWidget.staggeredDotsWave(
+              color: AppColors.colorYellow,
+              size: 50,
+            ));
+          }
 
+          if (state is GetMoviesErrorState) {
+            return Center(
+              child: Text(
+                "Something went wrong",
+                style: TextStyle(color: Colors.white),
+              ),
+            );
+          }
 
-        FutureBuilder(
-            future: FirebaseFunctions.getMovies(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
-                    child: LoadingAnimationWidget.staggeredDotsWave(
-                      color: AppColors.colorYellow,
-                      size: 50,
-                    ));
-              }
-              if (snapshot.hasError) {
-                return Text(
-                  "something went wrong",
-                  style: TextStyle(color: Colors.white),
-                );
-              }
-
-              var movies = snapshot.data?.docs.map((doc)=>doc.data()).toList();
-              if (movies!.isEmpty){
-                return Center(
-                  child: Text("No Movies",
-                  style: GoogleFonts.inter(
+          if (state is GetNoMovies) {
+            return Center(
+              child: Text(
+                "No Movies",
+                style: GoogleFonts.inter(
                     color: Colors.white,
                     fontSize: 22,
-                    fontWeight: FontWeight.w400
-                  ),),
-                );
-              }
-              return Padding(
-                padding: const EdgeInsets.only(top: 40,right:5,left: 5),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 5,left: 10),
-                      child: Text("Watchlist",
-                        style: GoogleFonts.inter(
-                            fontSize: 25,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w400
+                    fontWeight: FontWeight.w400),
+              ),
+            );
+          }
 
-                        ),),
-                    ),
-                    Expanded(
-                      child: ListView.separated(
-                          separatorBuilder: (context, index) => Divider(
+          var movies = WatchListCubit.get(context).movies;
+
+          return Padding(
+            padding: const EdgeInsets.only(top: 45, right: 5, left: 5),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 20, left: 10),
+                  child: Text(
+                    "Watchlist",
+                    style: GoogleFonts.inter(
+                        letterSpacing: 3,
+                        fontSize: 28,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w400),
+                  ),
+                ),
+                Expanded(
+                  child: ListView.separated(
+                      separatorBuilder: (context, index) => Divider(
                             color: Color(0xff707070),
                             indent: 20,
                             endIndent: 20,
                           ),
-                          itemBuilder: (context, index) => Container(
-                            padding: EdgeInsets.symmetric(horizontal: 10),
+                      itemBuilder: (context, index) => Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
                             child: Row(
                               children: [
                                 ClipRRect(
@@ -74,16 +90,17 @@ class WatchListTab extends StatelessWidget {
                                     child: Stack(children: [
                                       movies[index].path == null
                                           ? Image.asset(
-                                        "assets/images/no_image.png",
-                                        fit: BoxFit.fill,
-                                      )
+                                              "assets/images/no_image.png",
+                                              fit: BoxFit.fill,
+                                            )
                                           : Image.network(
-                                        "https://image.tmdb.org/t/p/w500${movies[index].path}",
-                                        fit: BoxFit.cover,
-                                      ),
+                                              "https://image.tmdb.org/t/p/w500${movies[index].path}",
+                                              fit: BoxFit.cover,
+                                            ),
                                       GestureDetector(
                                         onTap: () {
-                                         // FirebaseFunctions.deleteMovie();
+                                          FirebaseFunctions.deleteMovie(
+                                              movies[index].id);
                                         },
                                         child: Image.asset(
                                             "assets/images/after_adding.png"),
@@ -97,7 +114,8 @@ class WatchListTab extends StatelessWidget {
                                 Container(
                                   width: 250,
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         movies[index].title ?? '',
@@ -143,13 +161,13 @@ class WatchListTab extends StatelessWidget {
                               ],
                             ),
                           ),
-                          itemCount: movies.length),
-                    ),
-                  ],
+                      itemCount: movies.length),
                 ),
-              );
-            },)
-
-    ;
+              ],
+            ),
+          );
+        },
+      ),
+    );
   }
 }

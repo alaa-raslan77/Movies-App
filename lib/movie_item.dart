@@ -1,26 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movies_app/models/MovieResponse.dart';
-
 import 'colors_and_theme/app_colors.dart';
 import 'details_screens/movie_details_screen.dart';
 
 class MovieItem extends StatelessWidget {
   List<Results> results;
   int index;
-   MovieItem({
-    super.key,
-  required this.results,
-   required this.index});
+  MovieItem({super.key, required this.results, required this.index});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return
+
+      Container(
       padding: EdgeInsets.symmetric(horizontal: 10),
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(
-              context, MovieDetailsScreen.routeName,
+          Navigator.pushNamed(context, MovieDetailsScreen.routeName,
               arguments: results[index]);
         },
         child: Row(
@@ -33,15 +30,14 @@ class MovieItem extends StatelessWidget {
                 child: Stack(children: [
                   results[index].backdropPath == null
                       ? Image.asset(
-                    "assets/images/no_image.png",
-                    fit: BoxFit.fill,
-                  )
+                          "assets/images/no_image.png",
+                          fit: BoxFit.fill,
+                        )
                       : Image.network(
-                    "https://image.tmdb.org/t/p/w500${results[index].backdropPath}",
-                    fit: BoxFit.fill,
-                  ),
-                  Image.asset(
-                      "assets/images/before_adding.png"),
+                          "https://image.tmdb.org/t/p/w500${results[index].backdropPath}",
+                          fit: BoxFit.fill,
+                        ),
+
                 ]),
               ),
             ),
@@ -64,11 +60,7 @@ class MovieItem extends StatelessWidget {
                   ),
                   Text(
                     results[index].releaseDate!.substring(
-                        0,
-                        results[index]
-                            .releaseDate!
-                            .length
-                            .clamp(0, 4)),
+                        0, results[index].releaseDate!.length.clamp(0, 4)),
                     style: GoogleFonts.inter(
                         color: Color(0xffB5B4B4),
                         fontSize: 14,

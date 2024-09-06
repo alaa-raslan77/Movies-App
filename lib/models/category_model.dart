@@ -9,7 +9,7 @@ class CategoryModel {
   static List<CategoryModel> getCategories() {
     return [
       CategoryModel(
-          label: "Action", imagePath: "assets/images/action.jpeg", id: "28"),
+          label: "Action", imagePath: "assets/images/Action.jpeg", id: "28"),
       CategoryModel(
           label: "Adventure",
           imagePath: "assets/images/Adventure.jpeg",
@@ -44,7 +44,7 @@ class CategoryModel {
           id: "9648"),
       CategoryModel(
           label: "Romance",
-          imagePath: "assets/images/Romance1.jpeg",
+          imagePath: "assets/images/Romance.jpeg",
           id: "10749"),
       CategoryModel(
           label: "Science Fiction",
