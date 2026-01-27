@@ -43,21 +43,41 @@ personalization, and offline usability.
 
 ## 🖼️ Screenshots
 
-<p align="center">
+<p align="left">
+  <strong>Login</strong><br/>
   <img src="https://github.com/user-attachments/assets/76cba728-1241-45c2-883d-2942786dc736" width="250" />
+</p>
+
+<p align="left">
+  <strong>Home</strong><br/>
   <img src="https://github.com/user-attachments/assets/6dd412b5-9b83-45fb-9ca6-002e9750b997" width="250" />
+</p>
+
+<p align="left">
+  <strong>Movie Details</strong><br/>
+  <img src="https://github.com/user-attachments/assets/fd2df5d3-2b4b-4be7-9958-29c8a5325fbd" width="250" />
+</p>
+
+<p align="left">
+  <strong>Categories</strong><br/>
   <img src="https://github.com/user-attachments/assets/508e93f7-2754-48c6-9584-9d880b939854" width="250" />
 </p>
 
-<p align="center">
+<p align="left">
+  <strong>Category Details</strong><br/>
   <img src="https://github.com/user-attachments/assets/931fd8a6-b4f4-4d81-bd87-965e2fde5387" width="250" />
-  <img src="https://github.com/user-attachments/assets/fd2df5d3-2b4b-4be7-9958-29c8a5325fbd" width="250" />
+</p>
+
+<p align="left">
+  <strong>Wishlist</strong><br/>
   <img src="https://github.com/user-attachments/assets/1e13f045-4813-4b12-9d90-f6677f3113e0" width="250" />
 </p>
 
-<p align="center">
+<p align="left">
+  <strong>Settings</strong><br/>
   <img src="https://github.com/user-attachments/assets/6186e72f-5996-4ec6-a768-694b451e3268" width="250" />
 </p>
+
 
 ---
 
